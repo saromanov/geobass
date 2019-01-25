@@ -7,7 +7,8 @@ import (
 
 // GeoBass defines app
 type GeoBass struct {
-	m sync.RWMutex
+	m     sync.RWMutex
+	items map[Point]string
 }
 
 // Point defines point on store
