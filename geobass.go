@@ -86,6 +86,15 @@ func (c *GeoBass) Get(p Point) (interface{}, error) {
 	return value, nil
 }
 
+// Clear provides removing of the all data
+func (c *GeoBass) Clear() {
+	c.m.RLock()
+	defer c.m.RUnlock()
+	for k := range c.items {
+		delete(c.items, k)
+	}
+}
+
 // getHash retruns hash of the structure
 func getHash(p Point, precision Accuracy) (uint64, error) {
 	hash, err := hashstructure.Hash(p.truncate(precision), nil)
