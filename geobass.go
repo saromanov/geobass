@@ -1,14 +1,17 @@
 package geobass
 
 import (
+	"fmt"
 	"sync"
 	"time"
+
+	"github.com/mitchellh/hashstructure"
 )
 
 // GeoBass defines app
 type GeoBass struct {
 	m     sync.RWMutex
-	items map[Point]string
+	items map[uint64]interface{}
 }
 
 // Point defines point on store
@@ -18,9 +21,15 @@ type Point struct {
 }
 
 // Set provides setting to the cache
-func (c *GeoBass) Set(position Point, value interface{}, expiration time.Duration) {
+func (c *GeoBass) Set(p Point, value interface{}, expiration time.Duration) error {
 	c.m.Lock()
 	defer c.m.Unlock()
+	hash, err := hashstructure.Hash(p, nil)
+	if err != nil {
+		return fmt.Errorf("unable to hash point: %v", err)
+	}
+	c.items[hash] = value
+	return nil
 }
 
 // Get provides getting object by the point
