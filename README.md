@@ -1,4 +1,5 @@
 # geobass
+[![Documentation](https://godoc.org/github.com/saromanov/geobass?status.svg)](http://godoc.org/github.com/saromanov/geobass)
 [![Go Report Card](https://goreportcard.com/badge/github.com/saromanov/geobass)](https://goreportcard.com/report/github.com/saromanov/geobass)
 [![Build Status](https://travis-ci.org/saromanov/geobass.svg?branch=master)](https://travis-ci.org/saromanov/geobass)
 [![Coverage Status](https://coveralls.io/repos/github/saromanov/geobass/badge.svg?branch=master)](https://coveralls.io/github/saromanov/geobass?branch=master)
