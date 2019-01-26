@@ -18,7 +18,7 @@ type GeoBass struct {
 func (c *GeoBass) Set(p Point, value interface{}, expiration time.Duration) error {
 	c.m.Lock()
 	defer c.m.Unlock()
-	hash, err := hashstructure.Hash(p, nil)
+	hash, err := getHash(p)
 	if err != nil {
 		return fmt.Errorf("unable to hash point: %v", err)
 	}
@@ -30,5 +30,22 @@ func (c *GeoBass) Set(p Point, value interface{}, expiration time.Duration) erro
 func (c *GeoBass) Get(p Point) (interface{}, error) {
 	c.m.RLock()
 	defer c.m.RUnlock()
-	return nil, nil
+	hash, err := getHash(p)
+	if err != nil {
+		return nil, fmt.Errorf("unable to hash input point: %v", err)
+	}
+	value, ok := c.items[hash]
+	if !ok {
+		return nil, fmt.Errorf("unable to find element: %v", err)
+	}
+	return value, nil
+}
+
+// getHash retruns hash of the structure
+func getHash(p Point) (uint64, error) {
+	hash, err := hashstructure.Hash(p.truncate(10), nil)
+	if err != nil {
+		return 0, fmt.Errorf("unable to hash point: %v", err)
+	}
+	return hash, nil
 }
