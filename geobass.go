@@ -14,12 +14,6 @@ type GeoBass struct {
 	items map[uint64]interface{}
 }
 
-// Point defines point on store
-type Point struct {
-	Latitude  float64
-	Longitude float64
-}
-
 // Set provides setting to the cache
 func (c *GeoBass) Set(p Point, value interface{}, expiration time.Duration) error {
 	c.m.Lock()
