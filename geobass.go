@@ -14,6 +14,13 @@ type GeoBass struct {
 	items map[uint64]interface{}
 }
 
+// New provides initialization of the app
+func New() *GeoBass {
+	return &GeoBass{
+		items: make(map[uint64]interface{}),
+	}
+}
+
 // Set provides setting to the cache
 func (c *GeoBass) Set(p Point, value interface{}, expiration time.Duration) error {
 	c.m.Lock()
