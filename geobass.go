@@ -3,8 +3,8 @@ package geobass
 import (
 	"fmt"
 	"sync"
-
 	"github.com/mitchellh/hashstructure"
+	"github.com/pkg/errors"
 )
 
 // Accuracy specifies accuracy of the distance
@@ -99,7 +99,7 @@ func (c *GeoBass) Clear() {
 func getHash(p Point, precision Accuracy) (uint64, error) {
 	hash, err := hashstructure.Hash(p.truncate(precision), nil)
 	if err != nil {
-		return 0, fmt.Errorf("unable to hash point: %v", err)
+		return 0, errors.Wrap(err, "unable to get hash point")
 	}
 	return hash, nil
 }
